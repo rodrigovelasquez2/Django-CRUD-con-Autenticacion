@@ -3,10 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
 </head>
 <body>
-    <h1>HOME</h1>
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <h1>Home</h1>
+    <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis animi itaque inventore,
+        nisi quasi sapiente minima enim ad. Illum tenetur nobis iusto neque suscipit consequatur
+        tempore cum id accusantium asperiores!
+    </p>
+    {% endblock %}  
+
     <a href="/signup/">Sign Up</a>
 </body>
 </html>
