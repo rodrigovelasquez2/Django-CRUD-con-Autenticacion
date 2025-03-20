@@ -1,15 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task</title>
-</head>
-<body>
-    {% extends 'base.html' %}
+{% extends 'base.html' %}
 
-    {% block content %}
-        <h1>Tasks</h1>
-    {% endblock %}
+{% block content %}
+
+<body>
+    <h1>Tasks</h1>
+
+    <ul>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Created At</th>
+                    <th>User</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for task in tasks %}
+                <tr>
+                    {% if task.important %}
+                    <td><strong>{{ task.title }}</strong></td>
+                    {% else %}
+                    <td>{{ task.title }}</td>
+                    {% endif%}
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.created_at }}</td>
+                    <td>{{ task.user }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </ul>
 </body>
+{% endblock %}
+
 </html>
