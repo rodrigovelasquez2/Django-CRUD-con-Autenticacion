@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 
 # Create your views here.
+
+
 def home(request):
     # form se usa en HTML
     return render(request, 'home.html')
@@ -29,16 +31,22 @@ def signup(request):
         return render(request, 'signup.html', {
             'form': UserCreationForm
         })
-    else: 
-       
+    else:
+
         if request.POST['password1'] == request.POST['password2']:
             try:
                 # Crea el usuario
-                user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
+                user = User.objects.create_user(
+                    username=request.POST['username'], password=request.POST['password1'])
                 # Guarda el usuario
                 user.save()
                 return HttpResponse('User Created successfully')
             except:
-                return HttpResponse('User already exists')
-        return HttpResponse('Passwords do not match')
- 
+                return render(request, 'signup.html', {
+                    'form': UserCreationForm,
+                    'error': 'User already exists'
+                })
+        return render(request, 'signup.html', {
+            'form': UserCreationForm,
+            'error': 'Passwords did not match'
+        })
