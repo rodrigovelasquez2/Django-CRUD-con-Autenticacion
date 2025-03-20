@@ -96,14 +96,6 @@ def createTask(request):
             'form' : TaskForm
         })
     else: 
-        print(request.POST)
-        return render(request, 'create_task.html', {
-            'form' : TaskForm
-        })
-        
-    
-    """
-    if request.method == 'POST':
         try:
             form = TaskForm(request.POST)
             if form.is_valid():
@@ -111,10 +103,10 @@ def createTask(request):
                 task.user = request.user
                 task.save()
                 return redirect('tasks')
-        except Exception as e:
+        except ValueError as e:
             return render(request, 'create_task.html', {
                 'form': TaskForm,
                 'error': 'An error occurred while creating the task'
             })
-    
-    """
+
+            
