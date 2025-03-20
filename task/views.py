@@ -4,12 +4,11 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from django.utils import timezone
 from .forms import TaskForm
 from .models import Task
 
 # Create your views here.
-
-
 def home(request):
     # form se usa en HTML
     return render(request, 'home.html')
@@ -56,9 +55,7 @@ def signup(request):
             'error': 'Passwords did not match'
         })
 
-# Función para mostrar las tareas
-
-
+# Función para mostrar las tareas que faltan completar
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, dateCompleted__isnull=True)
     return render(request, 'tasks.html', {
@@ -134,3 +131,18 @@ def task_detail(request, task_id):
                 'form': form,
                 'error': 'An error occurred while updating the task'
             })
+
+# Completar una tarea   
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user = request.user)
+    if request.method == 'POST':
+        task.dateCompleted = timezone.now()
+        task.save()
+        return redirect('tasks')
+
+# Eliminar una tarea
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, pk=task_id, user=request.user)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('tasks')
