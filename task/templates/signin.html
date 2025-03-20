@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign In</title>
 </head>
+
 <body>
-    
+
     {% extends 'base.html' %}
 
     {% block content %}
-        <h1>Sign in </h1>
 
-        {{error}}
-        <form method="post">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button>Sign in</button>
+    <section class="col-md-4 offset-md-4 mt-5">
+        <main class="container">
+            <form method="post" class="card card-body">
+                {{error}}
+                {% csrf_token %}
 
-        </form>
+                <h1 class="text-center">Sign In</h1>
+                {{error}}
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" class="form-control" placeholder="Username" autofocus
+                        id="username">
+                </div>
+
+                <div class="mb-3">
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" class="form-control" placeholder="Write your password"
+                        autofocus id="password">
+                </div>
+
+
+                <button class="btn btn-primary">
+                    SignIn!
+                </button>
+
+            </form>
+        </main>
+    </section>
+
+
     {% endblock %}
 
 </body>
+
 </html>

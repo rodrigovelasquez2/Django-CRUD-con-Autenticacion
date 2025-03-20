@@ -1,21 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
     {% extends 'base.html' %}
 
     {% block content %}
-    <h1>Home</h1>
-    <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis animi itaque inventore,
-        nisi quasi sapiente minima enim ad. Illum tenetur nobis iusto neque suscipit consequatur
-        tempore cum id accusantium asperiores!
-    </p>
-    {% endblock %}  
+    <main class="container-fluid py-5">
+        <h1 class="display-1 text-center">Django APP</h1>
+        <section class="card card-body">
+            <p>
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Blanditiis animi itaque inventore,
+                nisi quasi sapiente minima enim ad. Illum tenetur nobis iusto neque suscipit consequatur
+                tempore cum id accusantium asperiores!
+            </p>
+        </section>
 
-    <a href="/signup/">Sign Up</a>
+        <div class=" text-center mt-5">
+            <a class="btn btn-dark" href="/signin/">SignIn</a>
+            <a class="btn btn-secondary" href="/signup/">SignUp</a>
+
+        </div>
+        {% endblock %}
+
+
+    </main>
 </body>
+
 </html>

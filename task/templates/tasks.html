@@ -1,42 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<body>
-    <h1>Tasks Pending</h1>
-
-    <ul>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>User</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for task in tasks %}
-                <tr>
-                    {% if task.important %}
-                    <td>
-                        <a href="{% url 'task_detail' task.id %}"><strong>{{ task.title }}</strong></a>
-                    </td>
-                    {% else %}
-                    <td>
-                        <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
-                    </td>
-                    {% endif %}
-                    <td>{{ task.description }}</td>
-                    <td>{{ task.user }}</td>
-                    <td>{{ task.dateCompleted|date:"M j, Y H:i" }}</td>
-                </tr>
-
-                {% endfor %}
-            </tbody>
-        </table>
-    </ul>
-</body>
+<main class="container my-5">
+    <h1 class="text-center mb-4 fw-bold text-dark">Tasks Pending</h1>
+    
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            {% for task in tasks %}
+            <div class="card mb-3 shadow-sm 
+                {% if task.important %} border-2 border-danger {% else %}border-2 border-primary{% endif %}">
+                <div class="card-body">
+                    <h4 class="{% if task.important %}text-danger fw-bold{% else %}text-primary{% endif %}">
+                        <a href="{% url 'task_detail' task.id %}" class="text-decoration-none">
+                            {{ task.title }}
+                        </a>
+                    </h4>
+                    <p class="text-muted">{{ task.description }}</p>
+                    <small class="text-secondary">
+                        <i class="bi bi-clock"></i> {{ task.dateCompleted|date:"M j, Y H:i" }}
+                    </small>
+                    <span class="float-end text-uppercase text-secondary fw-bold">
+                        <i class="bi bi-person-circle"></i> {{ task.user }}
+                    </span>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info text-center">
+                No tasks pending
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
 {% endblock %}
-
-</html>

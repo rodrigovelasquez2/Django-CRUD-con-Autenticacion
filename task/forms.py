@@ -1,7 +1,8 @@
-from django.forms import ModelForm
+from django import forms
 from task.models import Task
 
-class TaskForm(ModelForm):
+
+class TaskForm(forms.ModelForm):
     """
     TaskForm es un formulario basado en modelos que se utiliza para crear o actualizar
     instancias del modelo Task. Este formulario incluye los siguientes campos:
@@ -16,3 +17,8 @@ class TaskForm(ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'important']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter task title'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter task description'}),
+            'important': forms.CheckboxInput(attrs={'class': 'form-check-input m-auto'})
+        }
