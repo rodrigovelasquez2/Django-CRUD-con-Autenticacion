@@ -113,11 +113,24 @@ def createTask(request):
                 'error': 'An error occurred while creating the task'
             })
 
-# Consulta de una tarea por su id
-
-
+# Actualización de una tarea
 def task_detail(request, task_id):
-    task = get_object_or_404(Task, pk=task_id)
-    return render(request, 'task_details.html', {
-        'task': task
-    })
+    if request.method == 'GET':
+        task = get_object_or_404(Task, pk=task_id, user = request.user)
+        form = TaskForm(instance=task)
+        return render(request, 'task_details.html', {
+            'task': task,
+            'form': form
+        })
+    else:
+        try:
+            task = get_object_or_404(Task, pk=task_id, user = request.user)
+            form = TaskForm(request.POST, instance=task)
+            form.save()
+            return redirect('tasks')
+        except ValueError as e:
+            return render(request, 'task_details.html', {
+                'task': task,
+                'form': form,
+                'error': 'An error occurred while updating the task'
+            })
