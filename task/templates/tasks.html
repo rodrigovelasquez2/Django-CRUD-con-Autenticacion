@@ -19,14 +19,19 @@
                 {% for task in tasks %}
                 <tr>
                     {% if task.important %}
-                    <td><strong>{{ task.title }}</strong></td>
+                    <td>
+                        <a href="{% url 'task_detail' task.id %}"><strong>{{ task.title }}</strong></a>
+                    </td>
                     {% else %}
-                    <td>{{ task.title }}</td>
-                    {% endif%}
+                    <td>
+                        <a href="{% url 'task_detail' task.id %}">{{ task.title }}</a>
+                    </td>
+                    {% endif %}
                     <td>{{ task.description }}</td>
                     <td>{{ task.created_at }}</td>
                     <td>{{ task.user }}</td>
                 </tr>
+
                 {% endfor %}
             </tbody>
         </table>
