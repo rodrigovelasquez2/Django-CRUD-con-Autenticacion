@@ -146,3 +146,9 @@ def delete_task(request, task_id):
     if request.method == 'POST':
         task.delete()
         return redirect('tasks')
+
+def complete_tasks(request):
+    tasks = Task.objects.filter(user=request.user, dateCompleted__isnull=False).order_by('-dateCompleted')
+    return render(request, 'tasks.html', {
+        'tasks': tasks
+    })

@@ -3,7 +3,7 @@
 {% block content %}
 
 <body>
-    <h1>Tasks</h1>
+    <h1>Tasks Pending</h1>
 
     <ul>
         <table border="1">
@@ -11,8 +11,8 @@
                 <tr>
                     <th>Title</th>
                     <th>Description</th>
-                    <th>Created At</th>
                     <th>User</th>
+                    <th>Date</th>
                 </tr>
             </thead>
             <tbody>
@@ -28,8 +28,8 @@
                     </td>
                     {% endif %}
                     <td>{{ task.description }}</td>
-                    <td>{{ task.created_at }}</td>
                     <td>{{ task.user }}</td>
+                    <td>{{ task.dateCompleted|date:"M j, Y H:i" }}</td>
                 </tr>
 
                 {% endfor %}
