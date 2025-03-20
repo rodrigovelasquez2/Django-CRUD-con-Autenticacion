@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from .forms import TaskForm
 
 # Create your views here.
 
@@ -87,3 +88,33 @@ def signin(request):
             login(request, user)
             return redirect('tasks')
 
+
+# Create task
+def createTask(request):
+    if request.method == 'GET':
+        return render(request, 'create_task.html', {
+            'form' : TaskForm
+        })
+    else: 
+        print(request.POST)
+        return render(request, 'create_task.html', {
+            'form' : TaskForm
+        })
+        
+    
+    """
+    if request.method == 'POST':
+        try:
+            form = TaskForm(request.POST)
+            if form.is_valid():
+                task = form.save(commit=False)
+                task.user = request.user
+                task.save()
+                return redirect('tasks')
+        except Exception as e:
+            return render(request, 'create_task.html', {
+                'form': TaskForm,
+                'error': 'An error occurred while creating the task'
+            })
+    
+    """
