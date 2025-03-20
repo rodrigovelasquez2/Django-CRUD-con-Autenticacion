@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from .forms import TaskForm
 from .models import Task
 
@@ -56,6 +57,7 @@ def signup(request):
         })
 
 # Función para mostrar las tareas que faltan completar
+@login_required
 def tasks(request):
     tasks = Task.objects.filter(user=request.user, dateCompleted__isnull=True)
     return render(request, 'tasks.html', {
@@ -64,7 +66,7 @@ def tasks(request):
 
 # Función para cerrar sesión
 
-
+@login_required
 def signout(request):
     logout(request)
     return redirect('home')
@@ -90,7 +92,9 @@ def signin(request):
             return redirect('tasks')
 
 
+# TAREAS:
 # Create task
+@login_required
 def createTask(request):
     if request.method == 'GET':
         return render(request, 'create_task.html', {
@@ -111,6 +115,7 @@ def createTask(request):
             })
 
 # Actualización de una tarea
+@login_required
 def task_detail(request, task_id):
     if request.method == 'GET':
         task = get_object_or_404(Task, pk=task_id, user = request.user)
@@ -133,6 +138,7 @@ def task_detail(request, task_id):
             })
 
 # Completar una tarea   
+@login_required
 def complete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user = request.user)
     if request.method == 'POST':
@@ -141,13 +147,15 @@ def complete_task(request, task_id):
         return redirect('tasks')
 
 # Eliminar una tarea
+@login_required
 def delete_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id, user=request.user)
     if request.method == 'POST':
         task.delete()
         return redirect('tasks')
 
-def complete_tasks(request):
+@login_required
+def tasks_complete(request):
     tasks = Task.objects.filter(user=request.user, dateCompleted__isnull=False).order_by('-dateCompleted')
     return render(request, 'tasks.html', {
         'tasks': tasks
